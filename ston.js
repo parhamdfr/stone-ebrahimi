@@ -1,10 +1,5 @@
 const products = [
   {
-    name: "آمتیست",
-    image: "ََAmetist.jpg",
-    price: "100,000 تومان",
-  },
-  {
     name: "عقیق سلیمانی",
     image: "Solymani2.jpg",
     price: "200,000 تومان",
