@@ -37,7 +37,7 @@ products.forEach((product) => {
   `;
 
   div.querySelector(".buy-btn").addEventListener("click", () => {
-    alert(`برای خرید ${product.name} داخل تلگرام پیام دهید : ageteston@`);
+     alert(`برای خرید ${product.name} داخل تلگرام پیام دهید پایین`);
   });
 
   productList.appendChild(div);
