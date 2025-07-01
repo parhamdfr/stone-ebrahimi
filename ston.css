@@ -71,4 +71,28 @@ footer {
   text-align: center;
   padding: 15px;
 }
+  .telegram-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, #0088cc, #006699);
+      color: #fff;
+      padding: 14px 28px;
+      font-size: 18px;
+      font-weight: bold;
+      text-decoration: none;
+      border-radius: 50px;
+      box-shadow: 0 4px 12px rgba(0, 136, 204, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    .telegram-button i {
+      font-size: 22px;
+    }
+
+    .telegram-button:hover {
+      background: linear-gradient(135deg, #0077b3, #005580);
+      box-shadow: 0 6px 16px rgba(0, 119, 179, 0.5);
+      transform: translateY(-2px);
+    }
 
