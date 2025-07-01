@@ -2,22 +2,22 @@ const products = [
    {
     name: "آمیتیست سفید",
     image: "Ametist.jpg",
-    price: "200,000 تومان",
+    price: "50,000 تومان",
   },
   {
     name: "عقیق سلیمانی",
     image: "Solymani2.jpg",
-    price: "200,000 تومان",
+    price: "70,000 تومان",
   },
   {
     name: "عقیق سلیمانی گل دار",
     image: "Solymani1.jpg",
-    price: "300,000تومان",
+    price: "120,000تومان",
   },
    {
     name: "پک اقتصادی عقیق",
     image: "Pak.jpg",
-    price: "600,000تومان",
+    price: "300,000تومان",
   },
 ];
 
