@@ -73,7 +73,7 @@ orderForm.addEventListener("submit", async (e) => {
     orderForm.reset();
     popup.classList.add("hidden");
   } catch (error) {
-    alert("ارسال سفارش با خطا مواجه شد. لطفاً دوباره تلاش کنید.");
+    alert("ارسال سفارش با خطا مواجه شد.لطفاً از فیلتر شکن استفاده کنید.");
     console.error(error);
   }
 });
