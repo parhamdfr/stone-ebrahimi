@@ -77,24 +77,3 @@ orderForm.addEventListener("submit", async (e) => {
     console.error(error);
   }
 });
-fetch('https://ipinfo.io/json?token=YOUR_TOKEN_HERE')
-  .then(res => res.json())
-  .then(data => {
-    if(data.org && data.org.toLowerCase().includes('vpn')) {
-      alert("لطفاً با فیلترشکن وارد شوید.");
-    }
-  })
-  .catch(err => {
-    console.log("خطا در دریافت اطلاعات آی‌پی", err);
-  });
-
-fetch('https://ipinfo.io/json?token=YOUR_TOKEN_HERE')
-  .then(res => res.json())
-  .then(data => {
-    if(data.org && data.org.toLowerCase().includes('vpn')) {
-      alert("لطفاً با فیلترشکن وارد شوید.");
-    }
-  })
-  .catch(err => {
-    console.log("خطا در دریافت اطلاعات آی‌پی", err);
-  });
