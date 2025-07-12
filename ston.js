@@ -27,8 +27,8 @@ const closeBtn = document.querySelector(".close-btn");
 const orderForm = document.getElementById("order-form");
 const productNameInput = document.getElementById("product-name");
 
-const telegramBotToken = "YOUR_BOT_TOKEN"; // ← توکن بات
-const telegramChatId = "YOUR_CHAT_ID";     // ← چت آیدی خودت یا گروه
+const telegramBotToken = "7719287590:AAFaofMH8kER_f7L2hPZYNkVIBImlwWJOmA"; // ← توکن بات
+const telegramChatId = "6844751821";     // ← چت آیدی خودت یا گروه
 
 // ساخت لیست محصولات و دکمه خرید
 products.forEach((product) => {
