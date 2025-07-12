@@ -1,52 +1,46 @@
 body {
-  font-family: 'Vazir', sans-serif;
-  margin: 0;
+  font-family: Tahoma, sans-serif;
   direction: rtl;
+  margin: 0;
   background: #fdfdfd;
   color: #333;
+  padding: 10px;
 }
-
 header {
   background: #6a1b9a;
   color: white;
   padding: 15px 20px;
   text-align: center;
 }
-
 nav ul {
   list-style: none;
   padding: 0;
   margin-top: 10px;
+  text-align: center;
 }
-
 nav ul li {
   display: inline-block;
   margin: 0 10px;
 }
-
 nav ul li a {
   color: #fff;
   text-decoration: none;
 }
-
 .hero {
   background: url('https://upload.wikimedia.org/wikipedia/commons/8/8e/Agate-stones.jpg') no-repeat center center/cover;
-  color: rgb(0, 0, 0);
+  color: black;
   padding: 60px 20px;
   text-align: center;
 }
-
 .products {
   padding: 40px 20px;
-  background: #ffffff;
+  background: #fff;
 }
-
 .product-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
 }
-
 .product {
   background: white;
   border: 1px solid #ddd;
@@ -54,139 +48,85 @@ nav ul li a {
   text-align: center;
   border-radius: 8px;
 }
-
 .product img {
   max-width: 100%;
   border-radius: 5px;
 }
-
-.about,
-.contact {
-  padding: 30px 20px;
+.buy-btn {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #6a1b9a;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 1rem;
 }
-
+.buy-btn:hover {
+  background-color: #4a1375;
+}
 footer {
   background: #333;
   color: white;
   text-align: center;
   padding: 15px;
+  margin-top: 30px;
 }
-  .telegram-button {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: linear-gradient(135deg, #0088cc, #006699);
-      color: #fff;
-      padding: 14px 28px;
-      font-size: 18px;
-      font-weight: bold;
-      text-decoration: none;
-      border-radius: 50px;
-      box-shadow: 0 4px 12px rgba(0, 136, 204, 0.4);
-      transition: all 0.3s ease;
-    }
 
-    .telegram-button i {
-      font-size: 22px;
-    }
-
-    .telegram-button:hover {
-      background: linear-gradient(135deg, #0077b3, #005580);
-      box-shadow: 0 6px 16px rgba(0, 119, 179, 0.5);
-      transform: translateY(-2px);
-    }
-    .popup {
+/* Popup Styles */
+.popup {
   position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  top: 0; right: 0; bottom: 0; left: 0;
   background: rgba(0,0,0,0.6);
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  padding: 10px;
   z-index: 9999;
 }
-
-.form-content {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  width: 90%;
-  max-width: 400px;
-  position: relative;
-  text-align: right;
-}
-
-.form-content input,
-.form-content textarea {
-  width: 100%;
-  margin: 10px 0;
-  padding: 10px;
-  box-sizing: border-box;
-}
-
-.form-content button {
-  background: #1c92d2;
-  color: white;
-  padding: 10px;
-  border: none;
-  width: 100%;
-  cursor: pointer;
-}
-
-.close-btn {
-  position: absolute;
-  left: 10px;
-  top: 10px;
-  font-size: 18px;
-  cursor: pointer;
-}
- body {
-    font-family: Tahoma, sans-serif;
-    direction: rtl;
-    padding: 10px;
-  }
-  .popup {
-    position: fixed;
-    top: 0; right: 0; bottom: 0; left: 0;
-    background: rgba(0,0,0,0.6);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-    z-index: 9999;
-  }
-  .form-content {
-    background: white;
-    width: 100%;
-    max-width: 400px;
-    border-radius: 8px;
-    padding: 20px;
-    box-sizing: border-box;
-  }
-  input, textarea, button {
-    width: 100%;
-    margin: 8px 0;
-    padding: 10px;
-    font-size: 1rem;
-  }
-  button {
-    background-color: #1c92d2;
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
-  .close-btn {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    font-size: 24px;
-    cursor: pointer;
-  }
 .hidden {
   display: none !important;
 }
-
-
-  
+.form-content {
+  background: white;
+  width: 100%;
+  max-width: 400px;
+  border-radius: 8px;
+  padding: 20px;
+  box-sizing: border-box;
+  position: relative;
+  text-align: right;
+  direction: rtl;
+}
+.form-content input,
+.form-content textarea {
+  width: 100%;
+  margin: 8px 0;
+  padding: 10px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  text-align: right;
+}
+.form-content button {
+  background-color: #1c92d2;
+  color: white;
+  border: none;
+  padding: 12px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 1rem;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+.close-btn {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  font-size: 24px;
+  cursor: pointer;
+  user-select: none;
+  color: #999;
+}
+.close-btn:hover {
+  color: #333;
+}
