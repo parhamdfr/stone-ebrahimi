@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="google-site-verification" content="046hst-pESfy2SXEfnjwTgUw8JSEA3_AubBBpKWGXSg" />
   <meta charset="UTF-8">
   <title>فروشگاه سنگ ابراهیمی</title>
-  <link rel="stylesheet" href="ston.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
@@ -28,9 +26,7 @@
 
   <section id="products" class="products">
     <h2>محصولات ما</h2>
-    <div class="product-list">
-      <!-- محصولات در جاوااسکریپت اضافه می‌شوند -->
-    </div>
+    <div class="product-list"></div>
   </section>
 
   <section id="about" class="about">
@@ -40,7 +36,7 @@
 
   <section id="q">
     <h2>خواص سنگ عقیق</h2>
-    <p>سنگ عقیق یک سنگ قیمتی با خواص متنوع است که از نظر معنوی و درمانی مورد توجه قرار دارد. از جمله خواص آن می‌توان به محافظت در برابر انرژی‌های منفی، کاهش استرس و اضطراب، افزایش آرامش و تمرکز، و بهبود خلق و خو اشاره کرد. همچنین، اعتقاد بر این است که سنگ عقیق می‌تواند در درمان برخی بیماری‌ها مانند سردرد، مشکلات گوارشی و بیماری‌های پوستی نیز مؤثر باشد. </p>
+    <p>سنگ عقیق یک سنگ قیمتی با خواص متنوع است...</p>
     <ul>
       <li>محافظت در برابر انرژی‌های منفی</li>
       <li>کاهش استرس و اضطراب</li>
@@ -57,11 +53,26 @@
   <section id="contact" class="contact">
     <h2>تلگرام ما</h2>
     <p>
-    <a href="https://t.me/ageteston" class="telegram-button" target="_blank">
-    <i class="fab fa-telegram-plane"></i>
+      <a href="https://t.me/ageteston" target="_blank">
+        <i class="fab fa-telegram-plane"></i> گفت‌وگو در تلگرام
       </a>
     </p>
   </section>
+
+  <!-- فرم سفارش پاپ‌آپ -->
+  <div id="popup-form" class="popup hidden">
+    <div class="form-content">
+      <span class="close-btn">&times;</span>
+      <h3>ثبت سفارش</h3>
+      <form id="order-form">
+        <input type="text" name="name" placeholder="نام شما" required>
+        <input type="tel" name="phone" placeholder="شماره تماس" required>
+        <textarea name="address" placeholder="آدرس دقیق" required></textarea>
+        <input type="hidden" name="product" id="product-name">
+        <button type="submit">ارسال سفارش</button>
+      </form>
+    </div>
+  </div>
 
   <footer>
     <p>© 2025 فروشگاه سنگ ابراهیمی</p>
