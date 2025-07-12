@@ -185,7 +185,8 @@ footer {
     cursor: pointer;
   }
 .hidden {
-  display: none;
+  display: none !important;
 }
+
 
   
