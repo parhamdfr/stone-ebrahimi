@@ -1,24 +1,8 @@
 const products = [
-  {
-    name: "آمیتیست سفید",
-    image: "Ametist.jpg",
-    price: "50,000 تومان",
-  },
-  {
-    name: "عقیق سلیمانی",
-    image: "Solymani2.jpg",
-    price: "70,000 تومان",
-  },
-  {
-    name: "عقیق سلیمانی گل دار",
-    image: "Solymani1.jpg",
-    price: "120,000تومان",
-  },
-  {
-    name: "پک اقتصادی عقیق",
-    image: "Pak.jpg",
-    price: "300,000تومان",
-  },
+  { name: "آمیتیست سفید", image: "Ametist.jpg", price: "50,000 تومان" },
+  { name: "عقیق سلیمانی", image: "Solymani2.jpg", price: "70,000 تومان" },
+  { name: "عقیق سلیمانی گل دار", image: "Solymani1.jpg", price: "120,000 تومان" },
+  { name: "پک اقتصادی عقیق", image: "Pak.jpg", price: "300,000 تومان" },
 ];
 
 const productList = document.querySelector(".product-list");
@@ -27,8 +11,8 @@ const closeBtn = document.querySelector(".close-btn");
 const orderForm = document.getElementById("order-form");
 const productNameInput = document.getElementById("product-name");
 
-const telegramBotToken = "7719287590:AAFaofMH8kER_f7L2hPZYNkVIBImlwWJOmA"; // ← توکن بات
-const telegramChatId = "6844751821";     // ← چت آیدی خودت یا گروه
+const telegramBotToken = "7719287590:AAFaofMH8kER_f7L2hPZYNkVIBImlwWJOmA"; // توکن بات
+const telegramChatId = "6844751821"; // چت آیدی
 
 // ساخت لیست محصولات و دکمه خرید
 products.forEach((product) => {
@@ -76,18 +60,20 @@ orderForm.addEventListener("submit", async (e) => {
   `;
 
   const url = `https://api.telegram.org/bot${telegramBotToken}/sendMessage`;
-  await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      chat_id: telegramChatId,
-      text: message
-    })
-  });
 
-  alert("سفارش شما ثبت شد. با شما تماس خواهیم گرفت.");
-  orderForm.reset();
-  popup.classList.add("hidden");
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ chat_id: telegramChatId, text: message })
+    });
+    if (!response.ok) throw new Error("خطا در ارسال پیام");
+
+    alert("سفارش شما ثبت شد. با شما تماس خواهیم گرفت.");
+    orderForm.reset();
+    popup.classList.add("hidden");
+  } catch (error) {
+    alert("ارسال سفارش با خطا مواجه شد. لطفاً دوباره تلاش کنید.");
+    console.error(error);
+  }
 });
