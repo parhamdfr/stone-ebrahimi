@@ -61,20 +61,27 @@
   </section>
 
   <!-- فرم سفارش پاپ‌آپ -->
-  <div id="popup-form" class="popup hidden">
+    <div id="popup-form" class="popup hidden">
     <div class="form-content">
-      <span class="close-btn">&times;</span>
+      <span class="close-btn" title="بستن">&times;</span>
       <h3>ثبت سفارش</h3>
       <form id="order-form">
-        <input type="text" name="name" placeholder="نام شما" required>
-        <input type="tel" name="phone" placeholder="شماره تماس" required>
-        <textarea name="address" placeholder="آدرس دقیق" required></textarea>
-        <input type="hidden" name="product" id="product-name">
-        <button type="submit">ارسال سفارش</button>
+        <label for="product-name">نام محصول</label>
+        <input type="text" id="product-name" name="product" readonly />
+
+        <label for="name">نام و نام خانوادگی</label>
+        <input type="text" id="name" name="name" required placeholder="نام شما" />
+
+        <label for="phone">شماره تماس</label>
+        <input type="tel" id="phone" name="phone" required placeholder="مثلا 09123456789" />
+
+        <label for="address">آدرس</label>
+        <textarea id="address" name="address" rows="3" placeholder="آدرس کامل خود را وارد کنید" required></textarea>
+
+        <button type="submit">ثبت سفارش</button>
       </form>
     </div>
   </div>
-
   <footer>
     <p>© 2025 فروشگاه سنگ ابراهیمی</p>
   </footer>
