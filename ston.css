@@ -146,5 +146,48 @@ footer {
 .hidden {
   display: none;
 }
+ body {
+    font-family: Tahoma, sans-serif;
+    direction: rtl;
+    padding: 10px;
+  }
+  .popup {
+    position: fixed;
+    top: 0; right: 0; bottom: 0; left: 0;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    z-index: 9999;
+  }
+  .form-content {
+    background: white;
+    width: 100%;
+    max-width: 400px;
+    border-radius: 8px;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  input, textarea, button {
+    width: 100%;
+    margin: 8px 0;
+    padding: 10px;
+    font-size: 1rem;
+  }
+  button {
+    background-color: #1c92d2;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  .close-btn {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    font-size: 24px;
+    cursor: pointer;
+  }
+</style>
 
 
