@@ -11,6 +11,34 @@ const closeBtn = document.querySelector(".close-btn");
 const orderForm = document.getElementById("order-form");
 const productNameInput = document.getElementById("product-name");
 
+// نمایش پیام موفقیت بعد از برگشت به سایت
+window.addEventListener("load", () => {
+  if (window.location.hash === "#order-success") {
+    const message = document.createElement("div");
+    message.textContent = "✅ سفارش شما با موفقیت ثبت شد!";
+    message.style.position = "fixed";
+    message.style.top = "20px";
+    message.style.left = "50%";
+    message.style.transform = "translateX(-50%)";
+    message.style.background = "#d4edda";
+    message.style.color = "#155724";
+    message.style.padding = "12px 20px";
+    message.style.borderRadius = "10px";
+    message.style.boxShadow = "0 2px 10px rgba(0,0,0,0.2)";
+    message.style.fontWeight = "bold";
+    message.style.fontSize = "16px";
+    message.style.zIndex = "1000";
+
+    document.body.appendChild(message);
+
+    setTimeout(() => {
+      message.remove();
+    }, 5000); // بعد از ۵ ثانیه پاک می‌شه
+
+    history.replaceState(null, null, window.location.pathname);
+  }
+});
+
 // ساخت لیست محصولات
 products.forEach((product) => {
   const div = document.createElement("div");
@@ -38,8 +66,8 @@ closeBtn.addEventListener("click", () => {
   popup.classList.add("hidden");
 });
 
-// ارسال سفارش با فرم مخفی
-orderForm.addEventListener("submit", (e) => {
+// ارسال سفارش به ایمیل با فرم مخفی بدون ترک صفحه
+orderForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const formData = new FormData(orderForm);
@@ -61,7 +89,7 @@ orderForm.addEventListener("submit", (e) => {
     _captcha: "false",
     _subject: "سفارش جدید از سایت سنگ‌ها",
     _template: "table",
-    _next: "https://parhamdfr.github.io/#order-success", // آدرس بازگشت بعد از ارسال
+    _next: window.location.href + "#order-success"
   };
 
   for (const key in fields) {
@@ -76,39 +104,10 @@ orderForm.addEventListener("submit", (e) => {
   emailForm.submit();
 });
 
-// نمایش نوتیفیکیشن موفقیت بعد از بازگشت
+// نمایش پیام موفقیت در صورت بازگشت از FormSubmit
 window.addEventListener("load", () => {
   if (window.location.hash === "#order-success") {
-    showSuccessToast("✅ سفارش شما با موفقیت ثبت شد!");
-    history.replaceState(null, null, window.location.pathname); // حذف هشتگ از URL
+    successMessage.style.display = "block";
+    history.replaceState(null, null, window.location.pathname);
   }
 });
-
-// نوتیفیکیشن بالا به سبک Toast
-function showSuccessToast(message) {
-  const toast = document.createElement("div");
-  toast.textContent = message;
-  toast.style.position = "fixed";
-  toast.style.top = "20px";
-  toast.style.left = "50%";
-  toast.style.transform = "translateX(-50%)";
-  toast.style.background = "#d4edda";
-  toast.style.color = "#155724";
-  toast.style.padding = "14px 22px";
-  toast.style.borderRadius = "10px";
-  toast.style.boxShadow = "0 4px 12px rgba(0,0,0,0.2)";
-  toast.style.fontWeight = "bold";
-  toast.style.fontSize = "16px";
-  toast.style.zIndex = "1000";
-  toast.style.transition = "opacity 0.5s ease";
-  toast.style.opacity = "1";
-
-  document.body.appendChild(toast);
-
-  setTimeout(() => {
-    toast.style.opacity = "0";
-    setTimeout(() => {
-      toast.remove();
-    }, 500);
-  }, 4000);
-}
