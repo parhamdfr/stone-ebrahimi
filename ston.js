@@ -11,17 +11,6 @@ const closeBtn = document.querySelector(".close-btn");
 const orderForm = document.getElementById("order-form");
 const productNameInput = document.getElementById("product-name");
 
-// ساخت پیام موفقیت (در ابتدا مخفی)
-const successMessage = document.createElement("div");
-successMessage.id = "success-message";
-successMessage.style.display = "none";
-successMessage.style.color = "green";
-successMessage.style.marginTop = "10px";
-successMessage.style.textAlign = "center";
-successMessage.style.fontWeight = "bold";
-successMessage.textContent = "✅ سفارش شما با موفقیت ثبت شد!";
-document.body.appendChild(successMessage);
-
 // ساخت لیست محصولات
 products.forEach((product) => {
   const div = document.createElement("div");
@@ -49,8 +38,8 @@ closeBtn.addEventListener("click", () => {
   popup.classList.add("hidden");
 });
 
-// ارسال سفارش به ایمیل با فرم مخفی بدون ترک صفحه
-orderForm.addEventListener("submit", async (e) => {
+// ارسال سفارش با فرم مخفی
+orderForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
   const formData = new FormData(orderForm);
@@ -72,7 +61,7 @@ orderForm.addEventListener("submit", async (e) => {
     _captcha: "false",
     _subject: "سفارش جدید از سایت سنگ‌ها",
     _template: "table",
-    _next: window.location.href + "#order-success"
+    _next: "https://parhamdfr.github.io/#order-success", // آدرس بازگشت بعد از ارسال
   };
 
   for (const key in fields) {
@@ -87,10 +76,39 @@ orderForm.addEventListener("submit", async (e) => {
   emailForm.submit();
 });
 
-// نمایش پیام موفقیت در صورت بازگشت از FormSubmit
+// نمایش نوتیفیکیشن موفقیت بعد از بازگشت
 window.addEventListener("load", () => {
   if (window.location.hash === "#order-success") {
-    successMessage.style.display = "block";
-    history.replaceState(null, null, window.location.pathname);
+    showSuccessToast("✅ سفارش شما با موفقیت ثبت شد!");
+    history.replaceState(null, null, window.location.pathname); // حذف هشتگ از URL
   }
 });
+
+// نوتیفیکیشن بالا به سبک Toast
+function showSuccessToast(message) {
+  const toast = document.createElement("div");
+  toast.textContent = message;
+  toast.style.position = "fixed";
+  toast.style.top = "20px";
+  toast.style.left = "50%";
+  toast.style.transform = "translateX(-50%)";
+  toast.style.background = "#d4edda";
+  toast.style.color = "#155724";
+  toast.style.padding = "14px 22px";
+  toast.style.borderRadius = "10px";
+  toast.style.boxShadow = "0 4px 12px rgba(0,0,0,0.2)";
+  toast.style.fontWeight = "bold";
+  toast.style.fontSize = "16px";
+  toast.style.zIndex = "1000";
+  toast.style.transition = "opacity 0.5s ease";
+  toast.style.opacity = "1";
+
+  document.body.appendChild(toast);
+
+  setTimeout(() => {
+    toast.style.opacity = "0";
+    setTimeout(() => {
+      toast.remove();
+    }, 500);
+  }, 4000);
+}
