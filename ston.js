@@ -11,7 +11,11 @@ const closeBtn = document.querySelector(".close-btn");
 const orderForm = document.getElementById("order-form");
 const productNameInput = document.getElementById("product-name");
 
-// ساخت لیست محصولات و دکمه خرید
+// تلگرام
+const telegramBotToken = "7719287590:AAFaofMH8kER_f7L2hPZYNkVIBImlwWJOmA";
+const telegramChatId = "6844751821";
+
+// ساخت لیست محصولات
 products.forEach((product) => {
   const div = document.createElement("div");
   div.classList.add("product");
@@ -38,32 +42,41 @@ closeBtn.addEventListener("click", () => {
   popup.classList.add("hidden");
 });
 
-// ارسال سفارش به Webhook (در Make.com)
+// ارسال سفارش به تلگرام
 orderForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const formData = new FormData(orderForm);
-  const data = {
-    name: formData.get("name"),
-    phone: formData.get("phone"),
-    address: formData.get("address"),
-    product: formData.get("product")
-  };
+  const name = formData.get("name");
+  const phone = formData.get("phone");
+  const address = formData.get("address");
+  const product = formData.get("product");
+
+  const message = `
+🛒 سفارش جدید:
+📦 محصول: ${product}
+👤 نام: ${name}
+📱 تلفن: ${phone}
+📍 آدرس: ${address}
+  `;
+
+  const url = `https://api.telegram.org/bot${telegramBotToken}/sendMessage`;
 
   try {
-    const response = await fetch("https://hook.us1.make.com/3t6gylh1ctxlxyeeuxr8se8vvmeb80r9@hook.eu2.make.com", {
+    const response = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
+      body: JSON.stringify({ chat_id: telegramChatId, text: message })
     });
 
-    if (!response.ok) throw new Error("خطا در ارسال اطلاعات");
+    if (!response.ok) throw new Error("خطا در ارسال پیام");
 
-    alert("✅ سفارش شما با موفقیت ثبت شد.");
+    alert("✅ سفارش شما ثبت شد. با شما تماس خواهیم گرفت.");
     orderForm.reset();
     popup.classList.add("hidden");
+
   } catch (error) {
-    alert("❌ ثبت سفارش ناموفق بود. لطفاً دوباره تلاش کنید.");
+    alert("❌ ارسال سفارش با خطا مواجه شد. لطفاً از فیلترشکن استفاده کنید.");
     console.error(error);
   }
 });
