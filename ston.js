@@ -11,6 +11,17 @@ const closeBtn = document.querySelector(".close-btn");
 const orderForm = document.getElementById("order-form");
 const productNameInput = document.getElementById("product-name");
 
+// ساخت پیام موفقیت (در ابتدا مخفی)
+const successMessage = document.createElement("div");
+successMessage.id = "success-message";
+successMessage.style.display = "none";
+successMessage.style.color = "green";
+successMessage.style.marginTop = "10px";
+successMessage.style.textAlign = "center";
+successMessage.style.fontWeight = "bold";
+successMessage.textContent = "✅ سفارش شما با موفقیت ثبت شد!";
+document.body.appendChild(successMessage);
+
 // ساخت لیست محصولات
 products.forEach((product) => {
   const div = document.createElement("div");
@@ -38,7 +49,7 @@ closeBtn.addEventListener("click", () => {
   popup.classList.add("hidden");
 });
 
-// ارسال سفارش به ایمیل با فرم مخفی
+// ارسال سفارش به ایمیل با فرم مخفی بدون ترک صفحه
 orderForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -60,7 +71,8 @@ orderForm.addEventListener("submit", async (e) => {
     product,
     _captcha: "false",
     _subject: "سفارش جدید از سایت سنگ‌ها",
-    _template: "table"
+    _template: "table",
+    _next: window.location.href + "#order-success"
   };
 
   for (const key in fields) {
@@ -73,8 +85,12 @@ orderForm.addEventListener("submit", async (e) => {
 
   document.body.appendChild(emailForm);
   emailForm.submit();
+});
 
-  alert("✅ سفارش شما ثبت شد و به ایمیل ارسال شد.");
-  orderForm.reset();
-  popup.classList.add("hidden");
+// نمایش پیام موفقیت در صورت بازگشت از FormSubmit
+window.addEventListener("load", () => {
+  if (window.location.hash === "#order-success") {
+    successMessage.style.display = "block";
+    history.replaceState(null, null, window.location.pathname);
+  }
 });
