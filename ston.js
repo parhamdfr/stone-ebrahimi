@@ -11,9 +11,6 @@ const closeBtn = document.querySelector(".close-btn");
 const orderForm = document.getElementById("order-form");
 const productNameInput = document.getElementById("product-name");
 
-const telegramBotToken = "7719287590:AAFaofMH8kER_f7L2hPZYNkVIBImlwWJOmA"; // توکن بات
-const telegramChatId = "6844751821"; // چت آیدی
-
 // ساخت لیست محصولات و دکمه خرید
 products.forEach((product) => {
   const div = document.createElement("div");
@@ -41,39 +38,32 @@ closeBtn.addEventListener("click", () => {
   popup.classList.add("hidden");
 });
 
-// ارسال سفارش به تلگرام
+// ارسال سفارش به Webhook (در Make.com)
 orderForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const formData = new FormData(orderForm);
-  const name = formData.get("name");
-  const phone = formData.get("phone");
-  const address = formData.get("address");
-  const product = formData.get("product");
-
-  const message = `
-🛒 سفارش جدید:
-📦 محصول: ${product}
-👤 نام: ${name}
-📱 تلفن: ${phone}
-📍 آدرس: ${address}
-  `;
-
-  const url = `https://api.telegram.org/bot${telegramBotToken}/sendMessage`;
+  const data = {
+    name: formData.get("name"),
+    phone: formData.get("phone"),
+    address: formData.get("address"),
+    product: formData.get("product")
+  };
 
   try {
-    const response = await fetch(url, {
+    const response = await fetch("https://hook.us1.make.com/3t6gylh1ctxlxyeeuxr8se8vvmeb80r9@hook.eu2.make.com", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ chat_id: telegramChatId, text: message })
+      body: JSON.stringify(data)
     });
-    if (!response.ok) throw new Error("خطا در ارسال پیام");
 
-    alert("سفارش شما ثبت شد. با شما تماس خواهیم گرفت.");
+    if (!response.ok) throw new Error("خطا در ارسال اطلاعات");
+
+    alert("✅ سفارش شما با موفقیت ثبت شد.");
     orderForm.reset();
     popup.classList.add("hidden");
   } catch (error) {
-    alert("ارسال سفارش با خطا مواجه شد.لطفاً از فیلتر شکن استفاده کنید.");
+    alert("❌ ثبت سفارش ناموفق بود. لطفاً دوباره تلاش کنید.");
     console.error(error);
   }
 });
