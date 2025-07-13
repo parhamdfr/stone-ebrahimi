@@ -11,10 +11,6 @@ const closeBtn = document.querySelector(".close-btn");
 const orderForm = document.getElementById("order-form");
 const productNameInput = document.getElementById("product-name");
 
-// تلگرام
-const telegramBotToken = "7719287590:AAFaofMH8kER_f7L2hPZYNkVIBImlwWJOmA";
-const telegramChatId = "6844751821";
-
 // ساخت لیست محصولات
 products.forEach((product) => {
   const div = document.createElement("div");
@@ -42,7 +38,7 @@ closeBtn.addEventListener("click", () => {
   popup.classList.add("hidden");
 });
 
-// ارسال سفارش به تلگرام
+// ارسال سفارش به ایمیل با فرم مخفی
 orderForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -52,31 +48,33 @@ orderForm.addEventListener("submit", async (e) => {
   const address = formData.get("address");
   const product = formData.get("product");
 
-  const message = `
-🛒 سفارش جدید:
-📦 محصول: ${product}
-👤 نام: ${name}
-📱 تلفن: ${phone}
-📍 آدرس: ${address}
-  `;
+  const emailForm = document.createElement("form");
+  emailForm.action = "https://formsubmit.co/parhamebrahimi668@gmail.com";
+  emailForm.method = "POST";
+  emailForm.style.display = "none";
 
-  const url = `https://api.telegram.org/bot${telegramBotToken}/sendMessage`;
+  const fields = {
+    name,
+    phone,
+    address,
+    product,
+    _captcha: "false",
+    _subject: "سفارش جدید از سایت سنگ‌ها",
+    _template: "table"
+  };
 
-  try {
-    const response = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ chat_id: telegramChatId, text: message })
-    });
-
-    if (!response.ok) throw new Error("خطا در ارسال پیام");
-
-    alert("✅ سفارش شما ثبت شد. با شما تماس خواهیم گرفت.");
-    orderForm.reset();
-    popup.classList.add("hidden");
-
-  } catch (error) {
-    alert("❌ ارسال سفارش با خطا مواجه شد. لطفاً از فیلترشکن استفاده کنید.");
-    console.error(error);
+  for (const key in fields) {
+    const input = document.createElement("input");
+    input.type = "hidden";
+    input.name = key;
+    input.value = fields[key];
+    emailForm.appendChild(input);
   }
+
+  document.body.appendChild(emailForm);
+  emailForm.submit();
+
+  alert("✅ سفارش شما ثبت شد و به ایمیل ارسال شد.");
+  orderForm.reset();
+  popup.classList.add("hidden");
 });
