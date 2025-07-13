@@ -94,7 +94,7 @@ function showSuccessToast(message) {
   toast.style.transform = "translateX(-50%)";
   toast.style.background = "#d4edda";
   toast.style.color = "#155724";
-  toast.style.padding = "12px 20px";
+  toast.style.padding = "12px 15px";
   toast.style.borderRadius = "10px";
   toast.style.boxShadow = "0 2px 10px rgba(0,0,0,0.2)";
   toast.style.fontWeight = "bold";
