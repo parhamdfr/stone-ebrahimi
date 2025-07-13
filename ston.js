@@ -11,6 +11,17 @@ const closeBtn = document.querySelector(".close-btn");
 const orderForm = document.getElementById("order-form");
 const productNameInput = document.getElementById("product-name");
 
+// ساخت پیام موفقیت (در ابتدا مخفی)
+const successMessage = document.createElement("div");
+successMessage.id = "success-message";
+successMessage.style.display = "none";
+successMessage.style.color = "green";
+successMessage.style.marginTop = "10px";
+successMessage.style.textAlign = "center";
+successMessage.style.fontWeight = "bold";
+successMessage.textContent = "✅ سفارش شما با موفقیت ثبت شد!";
+document.body.appendChild(successMessage);
+
 // ساخت لیست محصولات
 products.forEach((product) => {
   const div = document.createElement("div");
@@ -38,8 +49,8 @@ closeBtn.addEventListener("click", () => {
   popup.classList.add("hidden");
 });
 
-// ارسال سفارش با فرم مخفی
-orderForm.addEventListener("submit", (e) => {
+// ارسال سفارش به ایمیل با فرم مخفی بدون ترک صفحه
+orderForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const formData = new FormData(orderForm);
@@ -61,7 +72,7 @@ orderForm.addEventListener("submit", (e) => {
     _captcha: "false",
     _subject: "سفارش جدید از سایت سنگ‌ها",
     _template: "table",
-    _next: "https://parhamdfr.github.io/#order-success", // ← آدرس دقیق سایت خودت با هشتگ
+    _next: window.location.href + "#order-success"
   };
 
   for (const key in fields) {
@@ -76,19 +87,10 @@ orderForm.addEventListener("submit", (e) => {
   emailForm.submit();
 });
 
-// نمایش پیام موفقیت بعد از برگشت به سایت
+// نمایش پیام موفقیت در صورت بازگشت از FormSubmit
 window.addEventListener("load", () => {
   if (window.location.hash === "#order-success") {
-    const message = document.createElement("div");
-    message.textContent = "✅ سفارش شما با موفقیت ثبت شد!";
-    message.style.color = "green";
-    message.style.fontWeight = "bold";
-    message.style.textAlign = "center";
-    message.style.margin = "20px auto";
-    message.style.fontSize = "1.2rem";
-    document.body.appendChild(message);
-
-    // پاک کردن هشتگ از آدرس
+    successMessage.style.display = "block";
     history.replaceState(null, null, window.location.pathname);
   }
 });
