@@ -47,7 +47,7 @@ orderForm.addEventListener("submit", (e) => {
   formData.append("_template", "table");
   formData.append("_subject", "سفارش جدید از سایت سنگ‌ها");
 
-  fetch("https://formsubmit.co/parhamebrahimi668@gmail.com", {
+  fetch("parhamebrahimi668@gmail.com", {
     method: "POST",
     body: formData
   })
