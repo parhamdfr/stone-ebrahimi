@@ -38,62 +38,54 @@ closeBtn.addEventListener("click", () => {
   popup.classList.add("hidden");
 });
 
-// ارسال سفارش
+// ارسال سفارش با fetch (بدون فرم HTML)
 orderForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
   const formData = new FormData(orderForm);
-  const name = formData.get("name");
-  const phone = formData.get("phone");
-  const address = formData.get("address");
-  const product = formData.get("product");
+  formData.append("_captcha", "false");
+  formData.append("_template", "table");
+  formData.append("_subject", "سفارش جدید از سایت سنگ‌ها");
 
-  const emailForm = document.createElement("form");
-  emailForm.action = "https://formsubmit.co/parhamebrahimi668@gmail.com";
-  emailForm.method = "POST";
-  emailForm.style.display = "none";
-
-  const fields = {
-    name,
-    phone,
-    address,
-    product,
-    _captcha: "false",
-    _subject: "سفارش جدید از سایت سنگ‌ها",
-    _template: "table",
-    _next: window.location.origin + window.location.pathname + "#order-success"
-  };
-
-  for (const key in fields) {
-    const input = document.createElement("input");
-    input.type = "hidden";
-    input.name = key;
-    input.value = fields[key];
-    emailForm.appendChild(input);
-  }
-
-  document.body.appendChild(emailForm);
-  emailForm.submit();
+  fetch("https://formsubmit.co/parhamebrahimi668@gmail.com", {
+    method: "POST",
+    body: formData
+  })
+    .then(response => {
+      if (response.ok) {
+        popup.classList.add("hidden");
+        showSuccessToast("✅ سفارش شما با موفقیت ثبت شد!");
+        orderForm.reset();
+      } else {
+        showErrorToast("❌ خطا در ارسال سفارش. لطفاً دوباره تلاش کنید.");
+      }
+    })
+    .catch(error => {
+      console.error("خطا در ارسال فرم:", error);
+      showErrorToast("⚠️ مشکلی در ارتباط با سرور رخ داد.");
+    });
 });
 
-// نمایش نوتیفیکیشن در صورت برگشت موفق
-window.addEventListener("load", () => {
-  if (window.location.hash === "#order-success") {
-    showSuccessToast("✅ سفارش شما با موفقیت ثبت شد!");
-    history.replaceState(null, null, window.location.pathname);
-  }
-});
-
-// تابع نوتیفیکیشن (Toast)
+// Toast موفقیت
 function showSuccessToast(message) {
+  showToast(message, "#d4edda", "#155724");
+}
+
+// Toast خطا
+function showErrorToast(message) {
+  showToast(message, "#f8d7da", "#721c24");
+}
+
+// تابع عمومی Toast
+function showToast(message, bgColor, textColor) {
   const toast = document.createElement("div");
   toast.textContent = message;
   toast.style.position = "fixed";
   toast.style.top = "20px";
   toast.style.left = "50%";
   toast.style.transform = "translateX(-50%)";
-  toast.style.background = "#d4edda";
-  toast.style.color = "#155724";
+  toast.style.background = bgColor;
+  toast.style.color = textColor;
   toast.style.padding = "12px 15px";
   toast.style.borderRadius = "10px";
   toast.style.boxShadow = "0 2px 10px rgba(0,0,0,0.2)";
@@ -107,8 +99,6 @@ function showSuccessToast(message) {
 
   setTimeout(() => {
     toast.style.opacity = "0";
-    setTimeout(() => {
-      toast.remove();
-    }, 500);
+    setTimeout(() => toast.remove(), 500);
   }, 4000);
 }
