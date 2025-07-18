@@ -38,67 +38,44 @@ closeBtn.addEventListener("click", () => {
   popup.classList.add("hidden");
 });
 
-// ارسال سفارش با fetch (بدون فرم HTML)
-orderForm.addEventListener("submit", (e) => {
+// ارسال سفارش به ایمیل با fetch (بدون جابه‌جایی صفحه)
+orderForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const formData = new FormData(orderForm);
-  formData.append("_captcha", "false");
-  formData.append("_template", "table");
-  formData.append("_subject", "سفارش جدید از سایت سنگ‌ها");
+  const name = formData.get("name");
+  const phone = formData.get("phone");
+  const address = formData.get("address");
+  const product = formData.get("product");
 
-  fetch("parhamebrahimi668@gmail.com", {
-    method: "POST",
-    body: formData
-  })
-    .then(response => {
-      if (response.ok) {
-        popup.classList.add("hidden");
-        showSuccessToast("✅ سفارش شما با موفقیت ثبت شد!");
-        orderForm.reset();
-      } else {
-        showErrorToast("❌ خطا در ارسال سفارش. لطفاً دوباره تلاش کنید.");
-      }
-    })
-    .catch(error => {
-      console.error("خطا در ارسال فرم:", error);
-      showErrorToast("⚠️ مشکلی در ارتباط با سرور رخ داد.");
+  const fields = {
+    name,
+    phone,
+    address,
+    product,
+    _captcha: "false",
+    _subject: "سفارش جدید از سایت سنگ‌ها",
+    _template: "table"
+  };
+
+  try {
+    const response = await fetch("https://formsubmit.co/ajax/parhamebrahimi668@gmail.com", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify(fields)
     });
+
+    if (!response.ok) throw new Error("ارسال ناموفق بود");
+
+    alert("✅ سفارش شما با موفقیت ثبت شد.");
+    orderForm.reset();
+    popup.classList.add("hidden");
+
+  } catch (err) {
+    alert("❌ ارسال سفارش با خطا مواجه شد. لطفاً دوباره تلاش کنید.");
+    console.error(err);
+  }
 });
-
-// Toast موفقیت
-function showSuccessToast(message) {
-  showToast(message, "#d4edda", "#155724");
-}
-
-// Toast خطا
-function showErrorToast(message) {
-  showToast(message, "#f8d7da", "#721c24");
-}
-
-// تابع عمومی Toast
-function showToast(message, bgColor, textColor) {
-  const toast = document.createElement("div");
-  toast.textContent = message;
-  toast.style.position = "fixed";
-  toast.style.top = "20px";
-  toast.style.left = "50%";
-  toast.style.transform = "translateX(-50%)";
-  toast.style.background = bgColor;
-  toast.style.color = textColor;
-  toast.style.padding = "12px 15px";
-  toast.style.borderRadius = "10px";
-  toast.style.boxShadow = "0 2px 10px rgba(0,0,0,0.2)";
-  toast.style.fontWeight = "bold";
-  toast.style.fontSize = "16px";
-  toast.style.zIndex = "1000";
-  toast.style.opacity = "1";
-  toast.style.transition = "opacity 0.5s ease";
-
-  document.body.appendChild(toast);
-
-  setTimeout(() => {
-    toast.style.opacity = "0";
-    setTimeout(() => toast.remove(), 500);
-  }, 4000);
-}
